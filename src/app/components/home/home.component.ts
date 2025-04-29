@@ -1,33 +1,37 @@
 // src/app/pages/home/home.component.ts
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { FooterComponent } from '../footer/footer.component';
+import { HeaderComponent } from '../../components/header/header.component';
 import { ProductService } from '../../services/product.service';
+import { ProductCardComponent } from '../../components/product-card/product-card.component';
+import { StateService } from '../../services/state.service';
 import { Product } from '../../models/product.model';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink],
+  imports: [FooterComponent, RouterLink,ProductCardComponent,HeaderComponent],
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
   products: Product[] = [];
-  loading = true;
   error: string | null = null;
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private stateService: StateService
+  ) {}
 
   ngOnInit() {
-    this.productService.getAllProducts().subscribe({
-      next: (data) => {
-        this.products = data;
-        this.loading = false;
-      },
+    this.stateService.products.subscribe({
+      next: (products) => this.products = products,
       error: (err) => {
-        this.error = 'Failed to load products. Please try again later.';
-        this.loading = false;
         console.error('Error fetching products:', err);
+        this.error = 'Failed to load products. Please try again later.';
       }
     });
+
+    this.productService.getAllProducts();
   }
 }

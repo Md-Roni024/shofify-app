@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProductService } from '../../services/product.service';
+import { StateService } from '../../services/state.service';
 import { Product } from '../../models/product.model';
+import { FooterComponent } from '../footer/footer.component';
+import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [RouterLink],
+  imports: [FooterComponent, RouterLink,HeaderComponent],
   templateUrl: './product-details.component.html'
 })
 export class ProductDetailsComponent implements OnInit {
@@ -18,24 +21,13 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private stateService: StateService
   ) {}
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      const id = Number(params.get('id'));
-      if (id) {
-        this.loadProduct(id);
-      } else {
-        this.error = 'Invalid product ID';
-        this.loading = false;
-      }
-    });
-  }
-
-  loadProduct(id: number) {
-    this.loading = true;
-    this.productService.getProductById(id).subscribe({
+    // Subscribe to the selected product state
+    this.stateService.selectedProduct.subscribe({
       next: (data) => {
         this.product = data;
         this.loading = false;
@@ -46,6 +38,15 @@ export class ProductDetailsComponent implements OnInit {
         console.error('Error fetching product:', err);
       }
     });
+
+    // Fetch product by ID
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if (id) {
+      this.productService.getProductById(id);
+    } else {
+      this.error = 'Invalid product ID';
+      this.loading = false;
+    }
   }
 
   incrementQuantity() {

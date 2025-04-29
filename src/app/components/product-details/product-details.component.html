@@ -1,3 +1,5 @@
+<app-header></app-header>
+
 <div class="container mx-auto px-4 py-8">
     @if (loading) {
       <div class="flex justify-center items-center h-64">
@@ -9,9 +11,9 @@
       </div>
     } @else if (product) {
       <div class="flex flex-col md:flex-row gap-8">
-        <div class="md:w-1/2">
-          <div class="rounded-lg overflow-hidden">
-            <img [src]="product.image" [alt]="product.title" class="w-full h-120 object-contain">
+        <div class="md:w-1/2  bg-rose-100 ">
+          <div class="rounded-lg">
+            <img [src]="product.image" [alt]="product.title" class="w-120 h-100 m-auto mt-10 object-contain">
           </div>
         </div>
 
@@ -61,7 +63,7 @@
           }
   
           <div class="text-gray-600">
-            <p class="mb-4">This is a demonstration store. You can purchase products like this from <span class="underline">Coursework</span>.</p>
+            <p class="mb-4">{{product.description}} <span class="underline">Coursework</span>.</p>
             
             <p class="mb-4">Made by the well-respected and renowned athletic garments company Ebbets Field Flannels. Hand-sewn from genuine wool baseball cloth. This cap is built to last a lifetime.</p>
             
@@ -75,13 +77,4 @@
     }
   </div>
   
-  <footer class="bg-gray-100 mt-12">
-    <div class="container mx-auto px-4 py-8">
-      <p class="text-center text-gray-600">
-        A brand that strives to inspire and push creative culture forward.
-      </p>
-      <div class="border-t border-gray-200 mt-4 pt-4 text-center text-gray-500">
-        <p>&copy; 2025 Shofify. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
+  <app-footer></app-footer>
