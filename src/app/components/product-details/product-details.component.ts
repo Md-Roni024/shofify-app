@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ProductService } from '../../services/product.service';
-import { StateService } from '../../services/state.service';
+import { ActivatedRoute } from '@angular/router';
+import { ProductService } from '../../services/product/product.service';
+import { StateService } from '../../services/state/state.service';
 import { Product } from '../../models/product.model';
 import { FooterComponent } from '../footer/footer.component';
 import { HeaderComponent } from '../../components/header/header.component';
@@ -9,7 +9,7 @@ import { HeaderComponent } from '../../components/header/header.component';
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [FooterComponent, RouterLink,HeaderComponent],
+  imports: [FooterComponent,HeaderComponent],
   templateUrl: './product-details.component.html'
 })
 export class ProductDetailsComponent implements OnInit {
@@ -61,6 +61,7 @@ export class ProductDetailsComponent implements OnInit {
 
   addToCart() {
     this.addedToCart = true;
+    this.stateService.setCartQuantity(this.quantity);
     setTimeout(() => {
       this.addedToCart = false;
     }, 3000);

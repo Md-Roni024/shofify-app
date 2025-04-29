@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component,inject } from '@angular/core';
+import { StateService } from '../../services/state/state.service';
 
 @Component({
   selector: 'app-header',
@@ -7,5 +8,11 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-
+  quantity = 0;
+  constructor(private stateService: StateService) {}
+  ngOnInit() {
+    this.stateService.cartQuantity.subscribe(q => {
+      this.quantity = q;
+    });
+  }
 }

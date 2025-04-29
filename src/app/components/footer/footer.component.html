@@ -20,7 +20,7 @@
     </p>
     
     <!-- Social Icons -->
-    <div class="flex justify-center space-x-6">
+    <div class="flex justify-center space-x-6 mb-16">
       <!-- Facebook -->
       <a href="#" class="text-black">
         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -57,6 +57,41 @@
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
         </svg>
       </a>
+    </div>
+  </div>
+
+  <!-- Bottom Section with Country Selector, Payment Icons, and Copyright -->
+  <div class="container mx-auto px-4 max-w-4xl mt-16 border-t border-gray-200 pt-8">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+      <!-- Country/region selector -->
+      <div class="mb-6 md:mb-0">
+        <p class="text-gray-600 mb-2">Country/region</p>
+        <div class="relative inline-block">
+          <select class="border border-gray-300 rounded py-2 px-4 pr-8 appearance-none w-64 focus:outline-none">
+            <option>Canada (CAD $)</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Payment icons -->
+      <div class="flex items-center space-x-4">
+        <img src="visa.png" alt="Visa" class="h-6" />
+        <img src="mastercard.png" alt="Mastercard" class="h-6" />
+        <img src="american_express.png" alt="American Express" class="h-6" />
+        <img src="paypal.png" alt="PayPal" class="h-6" />
+        <img src="dinners.png" alt="Diners Club" class="h-6" />
+        <img src="discover.png" alt="Discover" class="h-6" />
+      </div>
+    </div>
+    
+    <!-- Copyright -->
+    <div class="mt-6 text-gray-600 text-sm">
+      <p>© 2025, <a href="#" class="text-gray-600 hover:underline">theme-spotlight-demo</a> Powered by Shopify</p>
     </div>
   </div>
 </footer>

@@ -1,26 +1,27 @@
 // src/app/pages/home/home.component.ts
-import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
 import { FooterComponent } from '../footer/footer.component';
 import { HeaderComponent } from '../../components/header/header.component';
-import { ProductService } from '../../services/product.service';
+import { ProductService } from '../../services/product/product.service';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
-import { StateService } from '../../services/state.service';
+import { StateService } from '../../services/state/state.service';
 import { Product } from '../../models/product.model';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FooterComponent, RouterLink,ProductCardComponent,HeaderComponent],
+  imports: [FooterComponent,ProductCardComponent,HeaderComponent],
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
   products: Product[] = [];
   error: string | null = null;
 
+  private productService= inject( ProductService)
+  private stateService= inject(StateService);
+
   constructor(
-    private productService: ProductService,
-    private stateService: StateService
+   
   ) {}
 
   ngOnInit() {
