@@ -1,4 +1,3 @@
-// src/app/pages/home/home.component.ts
 import { Component, inject, OnInit } from '@angular/core';
 import { FooterComponent } from '../footer/footer.component';
 import { HeaderComponent } from '../../components/header/header.component';
@@ -15,22 +14,19 @@ import { Product } from '../../models/product.model';
 })
 export class HomeComponent implements OnInit {
   products: Product[] = [];
-  error: string | null = null;
+  quantity = 0;
 
   private productService= inject( ProductService)
   private stateService= inject(StateService);
 
-  constructor(
-   
-  ) {}
 
   ngOnInit() {
     this.stateService.products.subscribe({
       next: (products) => this.products = products,
-      error: (err) => {
-        console.error('Error fetching products:', err);
-        this.error = 'Failed to load products. Please try again later.';
-      }
+    });
+
+    this.stateService.cartQuantity.subscribe(q => {
+      this.quantity = q;
     });
 
     this.productService.getAllProducts();

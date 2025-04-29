@@ -7,24 +7,20 @@ import { Product } from '../../models/product.model';
 })
 export class StateService {
 
-  private productsSubject = new BehaviorSubject<Product[]>([]);
-  products = this.productsSubject;
-  
-  private selectedProductSubject = new BehaviorSubject<Product | null>(null);
-  selectedProduct = this.selectedProductSubject;
-
+  products = new BehaviorSubject<Product[]>([]);
+  selectedProduct = new BehaviorSubject<Product | null>(null);
   cartQuantity = new BehaviorSubject<number>(0);
 
   constructor() {}
 
   // Method to update products in the state
   setProducts(products: Product[]): void {
-    this.productsSubject.next(products);
+    this.products.next(products);
   }
 
   // Method to update selected product in the state
   setSelectedProduct(product: Product | null): void {
-    this.selectedProductSubject.next(product);
+    this.selectedProduct.next(product);
   }
 
   setCartQuantity(quantity: number) {

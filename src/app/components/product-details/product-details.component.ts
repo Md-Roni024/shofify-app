@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product/product.service';
 import { StateService } from '../../services/state/state.service';
@@ -14,38 +14,30 @@ import { HeaderComponent } from '../../components/header/header.component';
 })
 export class ProductDetailsComponent implements OnInit {
   product: Product | null = null;
-  loading = true;
   error: string | null = null;
   quantity = 1;
   addedToCart = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private productService: ProductService,
-    private stateService: StateService
-  ) {}
+  private productService= inject( ProductService)
+  private stateService= inject(StateService);
+  private route = inject(ActivatedRoute)
 
   ngOnInit() {
-    // Subscribe to the selected product state
     this.stateService.selectedProduct.subscribe({
       next: (data) => {
         this.product = data;
-        this.loading = false;
       },
       error: (err) => {
         this.error = 'Failed to load product details. Please try again later.';
-        this.loading = false;
         console.error('Error fetching product:', err);
       }
     });
 
-    // Fetch product by ID
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
       this.productService.getProductById(id);
     } else {
       this.error = 'Invalid product ID';
-      this.loading = false;
     }
   }
 

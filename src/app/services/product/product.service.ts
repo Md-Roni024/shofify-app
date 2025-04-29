@@ -12,7 +12,6 @@ export class ProductService {
 
   constructor(private http: HttpClient, private stateService: StateService) {}
 
-  // Get all products and update the global state
   getAllProducts() {
     this.http.get<Product[]>(this.apiUrl).subscribe({
       next: (data) => {
@@ -24,7 +23,6 @@ export class ProductService {
     });
   }
 
-  // Get product by ID and update the selected product state
   getProductById(id: number): void {
     const allProducts = this.stateService.products.getValue();
   
