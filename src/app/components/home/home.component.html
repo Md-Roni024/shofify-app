@@ -34,7 +34,9 @@
         <div class="mb-2">
           <product-card [product]="product" />
           <div class=" mt-2 justify-center">
-            <h3 class="text-gray-800 text-sm font-medium truncate">{{ product.title }}</h3>
+            <h3 class="text-gray-800 text-sm font-medium truncate cursor-pointer hover:underline transition">
+              {{ product.title }}
+            </h3>
             <p class="text-gray-600 text-sm font-bold">${{ product.price.toFixed(2) }}</p>
           </div>
         </div>

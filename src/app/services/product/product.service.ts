@@ -1,19 +1,19 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable,inject } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { StateService } from '../state/state.service';
 import { environment } from '../../../environments/environment';
+import { HttpService } from '../../services/http/http.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
+  private httpService= inject(HttpService);
   private apiUrl = `${environment.BASE_URL}/products`;
-
-  constructor(private http: HttpClient, private stateService: StateService) {}
+  private stateService= inject(StateService)
 
   getAllProducts() {
-    this.http.get<Product[]>(this.apiUrl).subscribe({
+    this.httpService.get<Product[]>(this.apiUrl).subscribe({
       next: (data) => {
         this.stateService.setProducts(data);
       },
@@ -25,15 +25,11 @@ export class ProductService {
 
   getProductById(id: number): void {
     const allProducts = this.stateService.products.getValue();
-  
     const product = allProducts.find(product => product.id === id);
-  
     if (product) {
-      // Product found in state, no need to call API
       this.stateService.setSelectedProduct(product);
     } else {
-      // Product not found in state, fallback to API
-      this.http.get<Product>(`${this.apiUrl}/${id}`).subscribe({
+      this.httpService.get<Product>(`${this.apiUrl}/${id}`).subscribe({
         next: (data) => {
           this.stateService.setSelectedProduct(data);
         },
