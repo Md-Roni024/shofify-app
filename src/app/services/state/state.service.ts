@@ -11,7 +11,6 @@ export class StateService {
   selectedProduct = new BehaviorSubject<Product | null>(null);
   cartQuantity = new BehaviorSubject<number>(0);
 
-  constructor() {}
 
   // Method to update products in the state
   setProducts(products: Product[]): void {
@@ -24,6 +23,6 @@ export class StateService {
   }
 
   setCartQuantity(quantity: number) {
-    this.cartQuantity.next(quantity);
+    this.cartQuantity.next(this.cartQuantity.value+quantity);
   }
 }

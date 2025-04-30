@@ -1,9 +1,6 @@
-<!-- Header -->
-<app-header/>
 
-
-<div class="container mx-auto px-4 py-8">
-    <div class="container mx-auto px-6 py-5 flex justify-between items-center">
+<div class="container mx-auto px-4">
+  <div class="container mx-auto px-6 py-5 flex justify-between items-center">
       <div class="flex-1 flex justify-center md:justify-start">
         <a href="/" class="inline-flex">
             <img src="icon.png" alt="SPOTLIGHT" class="h-12" />
@@ -23,25 +20,38 @@
             </svg>
           </button>
           <div class="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 bg-yellow-300 text-black font-medium text-xs rounded-full">
-            {{quantity}}
+            {{cartQuantity}}
           </div>
         </div>
       </div>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      @for (product of products; track product.id) {
-        <div class="mb-2">
-          <product-card [product]="product" />
-          <div class=" mt-2 justify-center">
-            <h3 class="text-gray-800 text-sm font-medium truncate cursor-pointer hover:underline transition">
-              {{ product.title }}
-            </h3>
-            <p class="text-gray-600 text-sm font-bold">${{ product.price.toFixed(2) }}</p>
-          </div>
+@if (loading){
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    @for (skeleton of skeletonArray; track $index) {
+      <div class="rounded-lg p-4 shadow-sm space-y-3">
+        <div class="h-40 bg-gray-300 rounded-md"></div>
+        <div class="h-4 bg-gray-300 rounded w-3/4"></div>
+        <div class="h-4 bg-gray-300 rounded w-1/2"></div>
+      </div>
+    }
+  </div>
+}
+@else {
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    @for (product of products; track product.id) {
+      <div class="mb-2">
+        <product-card [product]="product" />
+        <div class=" mt-2 justify-center">
+          <h3 class="text-gray-800 text-sm font-medium truncate cursor-pointer hover:underline transition">
+            {{ product.title }}
+          </h3>
+          <p class="text-gray-600 text-sm font-bold">${{ product.price.toFixed(2) }}</p>
         </div>
-      }
-    </div>
+      </div>
+    }
+  </div>
+}
 </div>
 
 <!-- Footer -->

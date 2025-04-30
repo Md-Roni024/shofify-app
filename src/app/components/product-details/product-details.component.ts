@@ -4,33 +4,38 @@ import { ProductService } from '../../services/product/product.service';
 import { StateService } from '../../services/state/state.service';
 import { Product } from '../../models/product.model';
 import { FooterComponent } from '../footer/footer.component';
-import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [FooterComponent,HeaderComponent],
+  imports: [FooterComponent],
   templateUrl: './product-details.component.html'
 })
 export class ProductDetailsComponent implements OnInit {
   product: Product | null = null;
   error: string | null = null;
-  quantity = 1;
+  quantity = 0;
   addedToCart = false;
+  cartQuantity = 0;  
+  loading = true;
 
   private productService= inject( ProductService)
   private stateService= inject(StateService);
   private route = inject(ActivatedRoute)
+  skeletonArray: number[] = Array.from({ length: 8 }, (_, i) => i);
+
 
   ngOnInit() {
+    this.stateService.cartQuantity.subscribe(quantity => {
+      this.cartQuantity = quantity;
+    }); 
     this.stateService.selectedProduct.subscribe({
       next: (data) => {
-        this.product = data;
+        setTimeout(() => {
+          this.product = data;
+          this.loading = false;
+        }, 1000);
       },
-      error: (err) => {
-        this.error = 'Failed to load product details. Please try again later.';
-        console.error('Error fetching product:', err);
-      }
     });
 
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -50,12 +55,16 @@ export class ProductDetailsComponent implements OnInit {
       this.quantity--;
     }
   }
+  
 
   addToCart() {
     this.addedToCart = true;
     this.stateService.setCartQuantity(this.quantity);
+    this.cartQuantity = this.stateService.cartQuantity.value;
+    console.log(this.stateService.cartQuantity.value)
+
     setTimeout(() => {
       this.addedToCart = false;
-    }, 3000);
+    }, 1000);
   }
 }
