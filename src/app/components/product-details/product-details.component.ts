@@ -1,9 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product/product.service';
 import { StateService } from '../../services/state/state.service';
 import { Product } from '../../models/product.model';
 import { FooterComponent } from '../footer/footer.component';
+
 
 @Component({
   selector: 'app-product-details',
@@ -18,6 +19,7 @@ export class ProductDetailsComponent implements OnInit {
   addedToCart = false;
   cartQuantity = 0;  
   loading = true;
+
 
   private productService= inject( ProductService)
   private stateService= inject(StateService);

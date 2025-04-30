@@ -5,6 +5,7 @@ import { ProductCardComponent } from '../../components/product-card/product-card
 import { StateService } from '../../services/state/state.service';
 import { Product } from '../../models/product.model';
 
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -19,6 +20,10 @@ export class HomeComponent implements OnInit {
   private productService= inject( ProductService)
   private stateService= inject(StateService);
   skeletonArray: number[] = Array.from({ length: 12 }, (_, i) => i);
+
+  handleDataFromAlert(msg: string) {
+    console.log('Received Data from Alert:', msg);
+  }
 
   ngOnInit() {
     this.stateService.products.subscribe({
